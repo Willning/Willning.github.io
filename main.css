@@ -1,0 +1,87 @@
+header, footer {
+    padding: 40px;
+    color: white;
+    background-color: #274c01;
+    clear: left;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+}
+
+body {
+    background-color: #B0C4DE;
+    text-align: center;
+}
+
+.labelPanel {
+	margin: 0 auto;
+	margin-bottom: 5px;
+
+	font-size: 25px;
+	font-family: Helvetica, sans-serif;
+
+	border-style: solid;
+	border-width: 1px;
+
+
+    width: 60%;
+    height: 30px;
+    background-color: 	#C0C0C0;  
+    
+}
+
+
+.resultPanel {
+	margin: 0 auto;
+	margin-bottom: 5px;
+
+	font-size: 40px;
+	font-family: Helvetica, sans-serif;
+
+	border-style: solid;
+	border-width: 1px;
+
+    width: 60%;
+    height: 50px;
+    background-color:	#C0C0C0;  
+
+}
+
+.generalLabel{
+	font-family: Helvetica, sans-serif;
+}
+
+.button {
+	background-color: white;
+	height: 30px;
+	width: 100px;
+}
+
+.buttonBox{
+	margin-top: 12px;
+	
+}
+
+.buttonRow{
+	margin-top:12px;
+}
+
+
+.flavor {
+	background-color : #72a6b2;
+	color: black;
+	width: 250px;
+	padding: 20px 32px;
+	margin-right: 10px;
+	font-size: 40px;
+	font-family: Gill Sans Extrabold, sans-serif;
+	border-radius:  10px;
+	border-style: none;	
+	outline-style: none;
+}
+
+.flavor-clicked{
+	background-color: #577b84;
+
+}
+
+
