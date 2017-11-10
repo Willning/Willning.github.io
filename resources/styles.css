@@ -1,7 +1,7 @@
 body {
     background-color: #B0C4DE;
     display: flex;
-    flex-direction: column;
+    flex-direction: column;  
 
 
 
@@ -20,5 +20,24 @@ body {
   }
 
   .section{
-  	margin:auto;
+  	margin: auto;
+    font-family: monospace;
+
   }
+
+p{
+  text-align: justify;
+}
+
+.column{   
+  float:left;
+}
+
+.column.side{
+  
+}
+
+.column.middle{
+  margin: auto;
+  width: 15%;
+}
