@@ -1,0 +1,14 @@
+body {
+    background-color: #B0C4DE;
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  h1{
+  	font-family: monaco;
+  }
+
+  .section{
+  	margin:auto;
+  }
