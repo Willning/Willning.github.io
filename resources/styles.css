@@ -1,14 +1,12 @@
 body {
     background-color: #B0C4DE;
     display: flex;
-    flex-direction: column;  
-
-
-
+    flex-direction: column; 
+    font-family: monospace;
   }
 
-  h1{
-  	font-family: monospace;
+  h1, h2{
+  	text-align: center;
   }
 
 
@@ -19,6 +17,10 @@ body {
     padding-left: 15px;
   }
 
+  .profile{
+    text-align: center;
+  }
+
   .section{
   	margin: auto;
     font-family: monospace;
@@ -27,6 +29,10 @@ body {
 
 p{
   text-align: justify;
+}
+
+ul.projectList{
+  list-style-type: square;
 }
 
 .column{   
@@ -40,4 +46,7 @@ p{
 .column.middle{
   margin: auto;
   width: 15%;
+
+ 
+  opacity: 30%;
 }
