@@ -1,0 +1,40 @@
+html, body {
+      background-color: #B0C4DE;
+      height: 100%;
+ }
+
+.container{
+	background-color: #FFFFFF;
+
+}
+
+.warning{
+	color: red;
+}
+
+ .col{
+ 	padding-top: 5px;
+ 	justify-content: space-between;
+ }
+
+label{
+	padding: 10px;
+}
+
+.statTable {
+	border: 1px solid black;
+}
+
+.repH{
+	border: 1px solid black;
+	font-size: 15px;
+	padding: 10px;
+}
+
+.result{
+	font-size: 20px;
+}
+
+div:last-child {
+    height: 100%;
+}

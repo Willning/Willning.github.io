@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">    	
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+		<link rel="stylesheet" href="styles.css">
+		<script type='text/javascript' src="calculator.js"></script>
+	</head>
+	<title>
+		1RM Calculator
+	</title>
+
+	<body>
+
+		<div class = "container">
+			<div class = "jumbotron">			
+				<h1>Yet Another 1RM calculator</h1>					
+				<p>A simple web application that will estimate your one rep max.</p>							
+			</div>
+
+			<div class="row">
+				
+				<div class= "col">
+
+				<p class = "warning" id = "warning">Warning Label location</p>
+
+				<table>
+				<tr>
+					<th><label>Weight Used(Kg) </label></th>
+					<th><input  type = "number" id= "weight"></th>
+				</tr>
+
+				<tr>
+					<th><label>Reps Performed </label></th>
+					<th><input type="number" id="reps"></th>
+				</tr>
+
+				</table>
+			<button id = "calculate">Calculate</button>
+			</div>
+
+
+			<div class = "col">
+
+			<h2>One Rep Max</h2>
+			<p class = "result" id = "result">0</p>
+
+			<h4>Fomula Used</h4>
+				<form>
+					<div class = "radio">
+						<label><input type="radio" name="optradio" checked="checked" id = "eplay">Eplay</label>
+					</div>
+					<div class = "radio">
+						<label><input type="radio" name = "optradio" id= "brzycki">Brzycki</label>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<table class = "statTable" id = "statTable">
+			<h5>Percentages of Max</h5>	
+			
+		</table>
+
+
+	</div>
+
+	</body>
+
+
+</html>
