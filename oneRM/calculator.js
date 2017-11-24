@@ -86,7 +86,7 @@ window.onload = function(){
 			cell.classList.add("repH");
 
 			var res = rowTwo.insertCell(i);
-			res.innerHTML = (100-5*i)*max/100;
+			res.innerHTML = Math.round((100-5*i)*max/100);
 			res.classList.add("repH");
 		}
 
