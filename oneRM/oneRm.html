@@ -20,15 +20,14 @@
 				<p>A simple web application that will estimate your one rep max.</p>											
 			</div>
 
-			<div class="row">
-				
+			<div class="row">				
 				<div class= "col">
 
 				<p class = "warning" id = "warning">Warning Label location</p>
 
 				<table>
 				<tr>
-					<th><label>Weight Used(Kg) </label></th>
+					<th><label>Weight Used (kg or lbs) </label></th>
 					<th><input  type = "number" id= "weight"></th>
 				</tr>
 
@@ -50,22 +49,28 @@
 			<h4>Fomula Used</h4>
 				<form>
 					<div class = "radio">
-						<label><input type="radio" name="optradio" checked="checked" id = "eplay">Eplay</label>
+						<label><input type="radio" name="optradio" checked="checked" id = "eplay">Epley</label>
 					</div>
 					<div class = "radio">
-						<label><input type="radio" name = "optradio" id= "brzycki">Brzycki</label>
+						<label><input type="radio" name = "optradio" id= "brzycki">Brzycki (</label>
 					</div>
 				</form>
 			</div>
 		</div>
 
 		<table class = "statTable" id = "statTable">
-			<h5>Percentages of Max</h5>	
-			
-		</table>
+			<h5>Percentages of Max</h5>				
+		</table>			
 
+		<footer class = "fixed-bottom">
+			For more information about the formulas used see the following
+			<br>
+			<a href="http://opensiuc.lib.siu.edu/cgi/viewcontent.cgi?article=1744&context=gs_rp">Validation on Epley and Brzycki for back squat.</a>
+			<br>
+			<a href ="https://en.wikipedia.org/wiki/One-repetition_maximum">Wikipedia article on the one rep max</a>
+		</footer>
 
-	</div>
+		</div>
 
 	</body>
 
