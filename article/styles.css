@@ -1,0 +1,49 @@
+body, html{
+	height: 100%;
+	margin:0;
+	font-family: Merriweather, sans-serif;
+}
+
+@font-face{
+	font-family: Merriweather;
+	src:url ("https://fonts.google.com/specimen/Merriweather");
+}
+
+p{
+	text-align: justify;
+	max-width: 80%;
+}
+
+.title{
+	position: absolute;
+	background-color: black;
+	width: 25%;
+	top: 80%;	
+	margin: auto;	
+}
+
+
+.titleHeading{	
+	text-align: center;
+	font-size: 48px;
+	color: white;
+	margin:0px;
+	line-height: 1;
+}
+
+.subheading{
+	margin-top: 2px;
+	font-size: 20px;
+	color: white;
+	text-align: center;
+
+}
+
+.bg{
+	background-image: url("https://myculturedpalate.com/wp-content/uploads/2013/03/Homemade-Mayonnaise.jpg");
+	height: 100%;
+
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
