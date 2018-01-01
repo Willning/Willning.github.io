@@ -9,7 +9,6 @@ body {
   	text-align: center;
   }
 
-
   .contactList li{
 
     font-size: 20px;
@@ -47,4 +46,22 @@ ul.projectList{
   margin: auto;
   width: 15%; 
   opacity: 30%;
+}
+
+.textEntry{
+  width: 70%;
+  margin: auto;
+  font-size: 20px;
+  resize: none;
+  height: 150px;
+}
+
+.confirm{
+  margin:auto;
+  width: 20%;
+  
+}
+
+canvas{
+  margin: auto;
 }
