@@ -30,6 +30,23 @@ var Util = {
 	  	return Util.toInt(def, 0);
 	},
 
+	clock : function(seconds){
+		var millis = Math.trunc(seconds*100)%100;
+		var secs = Math.trunc(seconds%60);
+		var minutes = Math.trunc(seconds/60);
+
+		if (millis < 10){
+			millis = "0" + millis;
+		}
+
+		if (secs < 10){
+			secs = "0" + secs;
+		}
+		
+		return minutes +":" + secs + ":" + millis;
+
+	},
+
 	interpolate: function(a, b , percent){
 		return a + (b-a)*percent;
 	},
@@ -233,7 +250,7 @@ var Render = {
   		sprite = SPRITES.CAR;
   	}
 
-  	Render.simpleSprites(ctx, carWidth, 130, sprites, sprite, width/2 - 190/2, 250 + bounce, flip);
+  	Render.simpleSprites(ctx, carWidth, 130, sprites, sprite, width/2 - 190/2, 270 + bounce, flip);
   },
 
   //---------------------------------------------------------------------------

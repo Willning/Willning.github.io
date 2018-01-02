@@ -43,6 +43,10 @@ const OFFROADSPEED = MAXSPEED/3;
 var sprites = null;
 var background = null;
 
+//time
+var elapsedTime = 0; //time since first action
+var started = false; //has the game started
+
 
 //background constants
 var skySpeed    = 0.001; // background sky layer scroll speed when going around curve (or up hill)
@@ -151,7 +155,7 @@ function addCurve(num, curve) {
       addRoad(num, num, num, curve);
     }
 
-//add curved roads.
+//add S curved roads.
 function addSCurves() {
       addRoad(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM,  -ROAD.CURVE.EASY);
       addRoad(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM,   ROAD.CURVE.MEDIUM);
@@ -166,8 +170,8 @@ function resetRoad() {
   
   addStraight(5);
 
-  for (var i = 0; i< 20; i++){    
-    addRoad(Math.random()*100, Math.random()*100,Math.random()*100, Math.random()*10-5, Math.random()*100-50);
+  for (var i = 0; i< 200; i++){    
+    addRoad(Math.random()*100, Math.random()*100,Math.random()*100, Math.random()*20-10, Math.random()*75-25);
   }
 
   trackLength = segments.length * segmentLength;
@@ -280,6 +284,10 @@ function update(dt){
 
     playerX = playerX - (dx*playerSegment.curve*speedPercent*centrifugal); //here is where the turns will affect the player vehicle
 
+    if (started){
+        elapsedTime +=dt;
+    }
+
 }
 
 function render(dt){
@@ -300,12 +308,15 @@ function render(dt){
  
 
     ctx.font = "bold 14px verdana, sans-serif";
-    ctx.fillStyle="#FFFFFF";
+    ctx.fillStyle="#000000";
     ctx.fillText(Math.round(speed/100) + "km/h",width/2-40, 15);
+    ctx.fillText(Util.clock(elapsedTime), width/2-40, 30)
+    
 
+    //tell player they are braking
     if (braking){
         ctx.fillStyle = "#FF0000";
-        ctx.fillText("braking", width/2-40, 30);
+        ctx.fillText("braking", width/2-40, 45);
     }
 
 
@@ -328,9 +339,13 @@ document.addEventListener("keydown", onkeydown, false);
 document.addEventListener("keyup", onkeyup, false);
 
 function onkeydown(event){
+
     //power
    if (event.which === KEY.W || event.which === KEY.UP){
         //moving foward
+        if (!started){
+            started = true;
+        }
         foward = true;
         braking = false;
 
