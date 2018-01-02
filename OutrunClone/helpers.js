@@ -20,19 +20,52 @@ const step = 1/fps;
 //Utility methods
 var Util = {
 
+	toInt: function(obj, def){
+	
+		if (obj !== null) 
+	  	{ var x = parseInt(obj, 10);
+	  		if (!isNaN(x)) 
+	  		return x; 
+	  	} 
+	  	return Util.toInt(def, 0);
+	},
+
+	interpolate: function(a, b , percent){
+		return a + (b-a)*percent;
+	},
+
 	accelerate: function(speed, accel, dt){
 		return speed+(accel*dt);
 	},
 
 	increase:  function(start, increment, max) { // with looping
-	    var result = start + increment;
+	        var result = start + increment;
 	    while (result >= max)
-	      result -= max;
+		    result -= max;
 	    while (result < 0)
-	      result += max;
+	        result += max;
 	    return result;
-    
-    },
+	    
+	    },
+
+	    //traditional easing functions for curves
+	easeIn: function(a,b,percent) { 
+	  	return a + (b-a)*Math.pow(percent,2);  
+	   	},
+
+	easeOut: function(a,b,percent) { 
+	 	return a + (b-a)*(1-Math.pow(1-percent,2));
+		},
+
+	easeInOut:  function(a,b,percent){
+	   return a + (b-a)*((-Math.cos(percent*Math.PI)/2) + 0.5);
+	    },
+
+	percentageRemaining(n, total){
+		return (n%total)/total;
+	},
+
+
 
   limit: function(value, min, max)   { 
   	return Math.max(min, Math.min(value, max)); //brings the value into an acceptable range.
@@ -133,7 +166,7 @@ var Render = {
   sprite: function(ctx, width, height, resolution, roadWidth, sprites, sprite, scale, destX, destY, offsetX, offsetY, clipY) {
 
 
-                    //  scale for projection AND relative to roadWidth (for tweakUI)
+    //  scale for projection AND relative to roadWidth (for tweakUI)
     var destW  = (sprite.w * scale * width/2) * (SPRITES.SCALE * roadWidth);
     var destH  = (sprite.h * scale * width/2) * (SPRITES.SCALE * roadWidth);
 
@@ -147,7 +180,6 @@ var Render = {
 
     }
   },
-
 
   //simplified method for loading a sprite. 
   simpleSprites: function(ctx, width, height, sprites, sprite, x, y, flip){
@@ -171,7 +203,7 @@ var Render = {
   //---------------------------------------------------------------------------
 
   //render the player car based on the speed and the steering angle.
-  player: function(ctx, playerX, speed, left, right, sprites){
+  player: function(ctx, playerX, speed, left, right, sprites, drifting){
   	//TODO include bouncing based on speed.
   	var bounceCoeff; //hw bumpy the ride is
 
@@ -186,18 +218,22 @@ var Render = {
   	var sprite;
   	var flip = false;
 
+  	var carWidth = 195; //stock width, changes when drifting turn
+
   	if (left && speed>0){
   		flip = false;
-  		sprite = SPRITES.CARM;
+  		sprite = SPRITES.CARM; 	
+
   	}else if(right &&speed>0){
   		flip = true;
   		sprite = SPRITES.CARM;
+
   	}else{
   		flip =false;
   		sprite = SPRITES.CAR;
   	}
 
-  	Render.simpleSprites(ctx, 195, 130, sprites, sprite, width/2 - 190/2, 220 + bounce, flip);
+  	Render.simpleSprites(ctx, carWidth, 130, sprites, sprite, width/2 - 190/2, 250 + bounce, flip);
   },
 
   //---------------------------------------------------------------------------
@@ -218,7 +254,13 @@ var Render = {
 }
 
 var SPRITES = {
-	CAR : { x: 0 ,y: 122, w: 190, h: 122}, //straight going
-	CARM :{ x: 190, y:122, w: 195, h:122}, //slight turn
-	CARF: { x: 300, y:122, w: 258, h:122} //big
-}
+	CAR : { x: 0 ,y: 122, w: 190, h: 130}, //straight going
+	CARM :{ x: 190, y:122, w: 195, h:130}, //slight turn
+	CARF: { x: 383, y:122, w: 300, h:130} //big
+};
+
+var BACKGROUND = {
+  HILLS: { x:   5, y:   5, w: 1280, h: 480 },
+  SKY:   { x:   5, y: 495, w: 1280, h: 480 },
+  TREES: { x:   5, y: 985, w: 1280, h: 480 }
+};
