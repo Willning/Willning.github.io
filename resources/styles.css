@@ -62,6 +62,12 @@ ul.projectList{
   
 }
 
+.column.paragraph{
+  margin: auto;
+  width: 30%; 
+  opacity: 30%;
+}
+
 canvas{
   margin: auto;
 }
