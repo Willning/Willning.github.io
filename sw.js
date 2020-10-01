@@ -1,8 +1,9 @@
-var cacheName = 'hello-pwa';
+var cacheName = 'hello-pwa'; //PWA cache version increment for update
 var filesToCache = [
   '/',
   '/index.html',
   '/js/main.js'
+  //Cache all files that are used offline here
 ];
 
 /* Start the service worker and cache all of the app's content */
@@ -17,8 +18,14 @@ self.addEventListener('install', function(e) {
 /* Serve cached content when offline */
 self.addEventListener('fetch', function(e) {
   e.respondWith(
-    caches.match(e.request).then(function(response) {
-      return response || fetch(e.request);
+    caches.match(e.request).then((resp) => {
+      return resp || fetch(e.request).then((response)=> {
+          let responseClone = response.clone();
+          caches.open(cacheName).then((cache)=> {
+              cache.put(event.request, responseClone);
+              return response;
+          })
+      });
     })
   );
 });
