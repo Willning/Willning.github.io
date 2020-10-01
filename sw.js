@@ -16,16 +16,19 @@ self.addEventListener('install', function(e) {
 });
 
 /* Serve cached content when offline */
-self.addEventListener('fetch', function(e) {
-  e.respondWith(
-    caches.match(e.request).then((resp) => {
-      return resp || fetch(e.request).then((response)=> {
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+      caches.match(event.request).then((resp) => {
+        return resp || fetch(event.request).then((response) => {
           let responseClone = response.clone();
-          caches.open(cacheName).then((cache)=> {
-              cache.put(event.request, responseClone);
-              return response;
-          })
-      });
-    })
-  );
-});
+          caches.open(cacheName).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+  
+          return response;
+        });
+      }).catch(() => {
+        return caches.match('./images/cat.jpg');
+      })
+    );
+  });
