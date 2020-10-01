@@ -3,7 +3,7 @@
     "short_name": "Hello",
     "icons": [{
       "src": "images/icon.png",
-        "sizes": "128x128",
+        "sizes": "225x225",
         "type": "image/png"
       }],
     "lang": "en-US",
