@@ -1,2 +1,0 @@
-pinyin = require ("pinyin");
-
