@@ -1,0 +1,22 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "This is to a portfolio website like The Wickerman is to a movie.",
+  "main": "sw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Willning/Willning.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Willning/Willning.github.io/issues"
+  },
+  "homepage": "https://github.com/Willning/Willning.github.io#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

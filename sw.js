@@ -32,3 +32,16 @@ self.addEventListener('fetch', (event) => {
       })
     );
   });
+
+  self.addEventListener('sync', (event) =>{
+    //make trigger webhook
+    if (event.tag==='image-fetch') {
+        event.waitUntil(fetchImage());
+    }
+  });
+
+  function fetchImage (){
+      fetch('/images/dog.jpg').then((response) => {
+          return response;
+      })
+  }
