@@ -36,7 +36,7 @@ self.addEventListener('fetch', (event) => {
   self.addEventListener('sync', (event) =>{
     //make trigger webhook
     if (event.tag==='image-fetch') {
-        event.waitUntil(sendWebhook);
+        event.waitUntil(sendWebhook());
     }
   });
 
@@ -51,7 +51,7 @@ self.addEventListener('fetch', (event) => {
           content:"Sent from PWA",
           files: "",
           embeds: "",
-      }
+      };
 
       fetch('https://discordapp.com/api/webhooks/746174010244595824/riQhloUSEV2Dxx5SAvpdEJ1a4T5WgR0b_H-Qx6JtSIDllRpYqsh1Nt0asTAhtdK1Rp3K', {
           method: 'POST',
