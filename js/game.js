@@ -77,8 +77,8 @@ function draw(now){
 
 window.addEventListener('deviceorientation', e => {
         //use beta and gamma to recalc gravity.
-        engine.world.gravity.x = Math.sin(e.gamma * 0.0174533) * 0.1;
-        engine.world.gravity.y = Math.sin(e.beta * 0.0174533) * 0.1;
+        engine.world.gravity.x = Math.sin(e.gamma * 0.0174533) * 0.5;
+        engine.world.gravity.y = Math.sin(e.beta * 0.0174533) * 0.5;
     }
 
 );

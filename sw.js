@@ -3,7 +3,7 @@ var filesToCache = [
   '/',
   '/index.html',
   '/js/main.js',
-  '/js/matter-min.js',
+  '/js/matter.min.js',
   '/js/game.js'
   //Cache all files that are used offline here
 ];
@@ -27,21 +27,23 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
-self.addEventListener('activate', function(event) {
+
+self.addEventListener('activate', event => {
+  // delete any caches that aren't in expectedCaches
+  // which will get rid of static-v1
   event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.filter(function(cacheName) {
-          // Return true if you want to remove this cache,
-          // but remember that caches are shared across
-          // the whole origin
-        }).map(function(cacheName) {
-          return caches.delete(cacheName);
-        })
-      );
+    caches.keys().then(keys => Promise.all(
+      keys.map(key => {
+        if (cacheName !== key) {
+          return caches.delete(key);
+        }
+      })
+    )).then(() => {
+      console.log('V2 now ready to handle fetches!');
     })
   );
 });
+
 
 self.addEventListener('sync', (event) =>{
    //make trigger webhook
