@@ -1,8 +1,10 @@
-var cacheName = 'hello-pwa'; //PWA cache version increment for update
+var cacheName = 'hello-pwa3'; //PWA cache version increment for update
 var filesToCache = [
   '/',
   '/index.html',
-  '/js/main.js'
+  '/js/main.js',
+  '/js/matter-min.js',
+  '/js/game.js'
   //Cache all files that are used offline here
 ];
 
@@ -15,50 +17,58 @@ self.addEventListener('install', function(e) {
   );
 });
 
-/* Serve cached content when offline */
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-      caches.match(event.request).then((resp) => {
-        return resp || fetch(event.request).then((response) => {
-          let responseClone = response.clone();
-          caches.open(cacheName).then((cache) => {
-            cache.put(event.request, responseClone);
-          });
-  
-          return response;
-        });
-      }).catch(() => {
-        return caches.match('./images/cat.jpg');
-      })
-    );
-  });
 
-  self.addEventListener('sync', (event) =>{
-    //make trigger webhook
-    if (event.tag==='image-fetch') {
-        event.waitUntil(setTimeout(sendWebhook(),5000));
-    }
-  });
 
-  function fetchImage (){
-      fetch('/images/dog.jpg').then((response) => {
-          return response;
-      })
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    fetch(event.request).catch(function() {
+      return caches.match(event.request);
+    })
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function(cacheName) {
+          // Return true if you want to remove this cache,
+          // but remember that caches are shared across
+          // the whole origin
+        }).map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      );
+    })
+  );
+});
+
+self.addEventListener('sync', (event) =>{
+   //make trigger webhook
+   if (event.tag==='image-fetch') {
+       //event.waitUntil(setTimeout(sendWebhook(),5000));
   }
+});
 
-  function sendWebhook () {
-      data = {
-          content:"Sent from PWA",
-          files: "",
-          embeds: "",
-      };
+function fetchImage (){
+    fetch('/images/dog.jpg').then((response) => {
+        return response;
+    })
+}
 
-      fetch('https://discordapp.com/api/webhooks/746174010244595824/riQhloUSEV2Dxx5SAvpdEJ1a4T5WgR0b_H-Qx6JtSIDllRpYqsh1Nt0asTAhtdK1Rp3K', {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' },
-      }).then((response) => {
-          console.log(response);
-          return response;
-        });
+function sendWebhook () {
+    data = {
+        content:"Sent from PWA",
+        files: "",
+        embeds: "",
+    };
+
+    fetch('https://discordapp.com/api/webhooks/746174010244595824/riQhloUSEV2Dxx5SAvpdEJ1a4T5WgR0b_H-Qx6JtSIDllRpYqsh1Nt0asTAhtdK1Rp3K', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+    }).then((response) => {
+        console.log(response);
+        return response;
+      });
   }
