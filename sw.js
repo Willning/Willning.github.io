@@ -36,7 +36,7 @@ self.addEventListener('fetch', (event) => {
   self.addEventListener('sync', (event) =>{
     //make trigger webhook
     if (event.tag==='image-fetch') {
-        event.waitUntil(sendWebhook());
+        event.waitUntil(setTimeout(sendWebhook(),5000));
     }
   });
 
