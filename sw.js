@@ -56,6 +56,7 @@ self.addEventListener('fetch', (event) => {
       fetch('https://discordapp.com/api/webhooks/746174010244595824/riQhloUSEV2Dxx5SAvpdEJ1a4T5WgR0b_H-Qx6JtSIDllRpYqsh1Nt0asTAhtdK1Rp3K', {
           method: 'POST',
           body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' },
       }).then((response) => {
           console.log(response);
           return response;
