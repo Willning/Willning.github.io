@@ -4,7 +4,8 @@ var filesToCache = [
   '/index.html',
   '/js/main.js',
   '/js/matter.min.js',
-  '/js/game.js'
+  '/js/game.js',
+  '/css/style.css',
   //Cache all files that are used offline here
 ];
 
