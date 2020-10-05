@@ -33,10 +33,12 @@ var render = Render.create({
 });
 
     // create two boxes and a ground
-var boxA = Bodies.rectangle(20, 200, 80, 120);
+var boxA = Bodies.rectangle(200, 50, 80, 80);
+
+var boxB= Bodies.rectangle(200, 250, 80, 80);
 
     // add all of the bodies to the world
-World.add(engine.world, [boxA]);
+World.add(engine.world, [boxA,boxB]);
 
 // run the engine
 Engine.run(engine);
@@ -56,13 +58,30 @@ World.add(engine.world, [
     Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
 ]);
 
+// add mouse control
+var mouse = Mouse.create(render.canvas),
+    mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+            stiffness: 0.02,
+            render: {
+                visible: false
+            }
+        }
+    });
+
+World.add(engine.world, mouseConstraint);
+
+// keep the mouse in sync with rendering
+render.mouse = mouse;
+
 var last_time = 0;
 
-    // fit the render viewport to the scene
-    Render.lookAt(render, {
-        min: { x: 0, y: 0 },
-        max: { x: 800, y: 600 }
-    });
+// fit the render viewport to the scene
+Render.lookAt(render, {
+    min: { x: 0, y: 0 },
+    max: { x: 800, y: 600 }
+});
 
 requestAnimationFrame(draw);
 

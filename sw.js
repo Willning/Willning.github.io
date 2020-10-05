@@ -1,4 +1,4 @@
-var cacheName = 'hello-pwa3'; //PWA cache version increment for update
+var cacheName = 'hello-pwa4'; //PWA cache version increment for update
 var filesToCache = [
   '/',
   '/index.html',
@@ -30,8 +30,7 @@ self.addEventListener('fetch', function(event) {
 
 
 self.addEventListener('activate', event => {
-  // delete any caches that aren't in expectedCaches
-  // which will get rid of static-v1
+  // delete any caches that aren't the current cache
   event.waitUntil(
     caches.keys().then(keys => Promise.all(
       keys.map(key => {
@@ -48,8 +47,8 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('sync', (event) =>{
    //make trigger webhook
-   if (event.tag==='image-fetch') {
-       //event.waitUntil(setTimeout(sendWebhook(),5000));
+   if (event.tag==='sync_event') {
+       event.waitUntil(setTimeout(sendWebhook(),5000));
   }
 });
 
@@ -59,19 +58,37 @@ function fetchImage (){
     })
 }
 
-function sendWebhook () {
+
+async function sendWebhook () {
     data = {
         content:"Sent from PWA",
         files: "",
         embeds: "",
     };
+    message_sent = false;
+    attempts = 0;
+    while(!message_sent || attempts >= 5) {
+        try {
+            attempts++;
+            const response = await fetch('https://discordapp.com/api/webhooks/746174010244595824/riQhloUSEV2Dxx5SAvpdEJ1a4T5WgR0b_H-Qx6JtSIDllRpYqsh1Nt0asTAhtdK1Rp3K', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' },
+            });
+            if (response.ok) {
+                message_sent = true;
+            } else {
+                //Bad response
+                console.log("Bad response");
+                //Timed backoff
+                await new Promise(r => setTimeout(r, (attempts+1)*1000));
+            }           
+        }catch(err) {
+            //No response.
+            console.log(err);
+            await new Promise(r => setTimeout(r, (attempts+1)*1000));
+        }
+    } 
 
-    fetch('https://discordapp.com/api/webhooks/746174010244595824/riQhloUSEV2Dxx5SAvpdEJ1a4T5WgR0b_H-Qx6JtSIDllRpYqsh1Nt0asTAhtdK1Rp3K', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
-    }).then((response) => {
-        console.log(response);
-        return response;
-      });
-  }
+    
+}
