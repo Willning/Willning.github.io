@@ -1,4 +1,4 @@
-var cacheName = 'hello-pwa4'; //PWA cache version increment for update
+var cacheName = 'hello-pwa5'; //PWA cache version increment for update
 var filesToCache = [
   '/',
   '/index.html',
@@ -17,7 +17,6 @@ self.addEventListener('install', function(e) {
     })
   );
 });
-
 
 
 self.addEventListener('fetch', function(event) {
@@ -39,7 +38,7 @@ self.addEventListener('activate', event => {
         }
       })
     )).then(() => {
-      console.log('V2 now ready to handle fetches!');
+      console.log('New version installed');
     })
   );
 });
@@ -52,11 +51,26 @@ self.addEventListener('sync', (event) =>{
   }
 });
 
-function fetchImage (){
-    fetch('/images/dog.jpg').then((response) => {
-        return response;
-    })
-}
+
+self.addEventListener('push', function(event) {
+    
+    if (event.data) {
+      console.log('Just got a push event ', event.data.text())
+    } else {
+      console.log('Got a push event but no data')
+    }
+    console.log(event);
+
+    //Show the notification
+    if (event.data) {        
+        self.registration.showNotification("Push notification", {
+            body: event.data.text(),
+            icon:'images/icon.png',
+            vibrate: [100,50,100],
+        });
+    }   
+
+  });
 
 
 async function sendWebhook () {
@@ -90,5 +104,4 @@ async function sendWebhook () {
         }
     } 
 
-    
 }

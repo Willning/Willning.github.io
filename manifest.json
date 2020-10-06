@@ -10,5 +10,6 @@
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "white",
-    "theme_color": "white"
+    "theme_color": "white",
+    "gcm_sender_id": "My_app"
   }

@@ -33,7 +33,7 @@ var render = Render.create({
 });
 
     // create two boxes and a ground
-var boxA = Bodies.rectangle(200, 50, 80, 80);
+var boxA = Bodies.rectangle(200, 150, 80, 80);
 
 var boxB= Bodies.rectangle(200, 250, 80, 80);
 

@@ -7,7 +7,8 @@ window.onload = () => {
       //Background sync.
       navigator.serviceWorker.ready.then((swRegistration)=> {
         document.getElementById('sync_button').addEventListener('click', ()=> {
-          swRegistration.sync.register('sync_event')
+          Notification.requestPermission();
+          swRegistration.sync.register('sync_event');
         })
       });
     }
@@ -28,7 +29,7 @@ window.onload = () => {
       message_tag.innerHTML = "App is Not Installed";
     }
     
-    //Capture the initial install prompt and reuse it in the button
+    //Capture the initial install prompt and reuse it when the button is pressed
     let deferredPrompt; 
     window.addEventListener('beforeinstallprompt', (e)=> {
       deferredPrompt = e;
@@ -51,17 +52,16 @@ window.onload = () => {
     })
 
 
-    function showNotification() {      
-      
+    //On page notificiation
+    function showNotification() {     
       if (Notification.permission === 'granted') {
 
         navigator.serviceWorker.ready.then((registration) => {
           registration.showNotification("Hello", {
-            body: "Work",
+            body: "Will this work?",
             icon: 'images/icon.png',
             vibrate: [100,50,100],
-          });
-          
+          });          
         });
       }
     }
@@ -70,5 +70,39 @@ window.onload = () => {
     notify_button.addEventListener('click', ()=> {
       showNotification();
     })    
+
+    
+
+    //Push notifications
+    const applicationServerPublicKey = 'BDL6S2C706gO9ZzxvaPV_BKVM3gO4aeoCMFWbREmBMDMlshqd4rA9ybl5PHqtKRPKQCkfoE2K560mwIY5TK4seM';
+
+    function subscribeUser() {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then((reg) => {
+          reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey: applicationServerPublicKey }) 
+          .then( (sub) => {
+
+            var sub_json = JSON.parse(JSON.stringify(sub)); //lmao what?            
+            queueServerPost(sub_json.endpoint, sub_json['keys']['auth'],sub_json['keys']['p256dh']);
+            
+          });;
+        })
+      }
+    }
+
+    async function queueServerPost(endpoint,auth_key,hash_key) {
+      const response = await fetch("http://localhost:3000/push_test?" + new URLSearchParams({
+        url_endpoint: endpoint,
+        auth_key: auth_key,
+        hash_key: hash_key,
+        })        
+      );
+    }
+
+    var subscribe_button = document.getElementById('subscribe');
+
+    subscribe_button.addEventListener('click', ()=> {
+      subscribeUser(); 
+    })
     
   }
