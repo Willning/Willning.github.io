@@ -15,7 +15,6 @@ window.onload = () => {
 
 
     var message_tag = document.getElementById('message');
-
     let installed = false; 
 
     //Detect if installed. (i.e. running in standalone mode )
@@ -73,6 +72,7 @@ window.onload = () => {
 
     
 
+
     //Push notifications
     const applicationServerPublicKey = 'BDL6S2C706gO9ZzxvaPV_BKVM3gO4aeoCMFWbREmBMDMlshqd4rA9ybl5PHqtKRPKQCkfoE2K560mwIY5TK4seM';
 
@@ -81,7 +81,6 @@ window.onload = () => {
         navigator.serviceWorker.ready.then((reg) => {
           reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey: applicationServerPublicKey }) 
           .then( (sub) => {
-
             var sub_json = JSON.parse(JSON.stringify(sub)); //lmao what?            
             queueServerPost(sub_json.endpoint, sub_json['keys']['auth'],sub_json['keys']['p256dh']);
             
@@ -104,5 +103,22 @@ window.onload = () => {
     subscribe_button.addEventListener('click', ()=> {
       subscribeUser(); 
     })
-    
+
+
+    var camera = document.getElementById('camera');
+    camera.addEventListener('click', async function init(e) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia( {
+          audio: false,
+          video: true
+        })
+        const videoTracks = stream.getVideoTracks();
+        console.log(videoTracks);
+  
+        document.getElementById("video-pane").srcObject = stream;
+      }catch (err) {
+        console.log(err);
+      }      
+    })
+
   }
