@@ -1,0 +1,23 @@
+{
+  "name": "covidscanner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "cbor": "^8.0.2",
+    "cose-js": "^0.8.2",
+    "hi-base32": "^0.5.1",
+    "node-inspect-extracted": "^1.0.8",
+    "qr-scanner": "^1.3.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "raw-loader": "^4.0.2"
+  }
+}
