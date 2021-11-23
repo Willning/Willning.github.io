@@ -35,8 +35,7 @@
                 md.enumerateDevices().then(devices => {
                     callback(devices.some(device => 'videoinput' === device.kind));
                 });
-        }
-        
+        }        
 
         function tick() {
             if (video.readyState === video.HAVE_ENOUGH_DATA) {
@@ -47,6 +46,7 @@
                 var code = jsQR(imageData.data, imageData.width, imageData.height, {
                     inversionAttempts: "dontInvert",
                 });
+
                 if (code) {
                     handleScan(code.data);
                 }
