@@ -13,6 +13,7 @@
     "cbor-web": "^8.1.0",
     "cose-js": "^0.8.2",
     "hi-base32": "^0.5.1",
+    "jsqr": "^1.4.0",
     "node-inspect-extracted": "^1.0.8"
   },
   "devDependencies": {

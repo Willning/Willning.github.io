@@ -2,6 +2,11 @@
         const cose = require('cose-js');
         const jwk = require('./keys.json');
         const cbor = require('cbor-web');
+        const jsQR = require('jsqr');
+
+        let video = document.getElementById('video-pane');
+        let canvasElement = document.getElementById("canvas");
+        let canvas = canvasElement.getContext("2d");
 
         const trusted_issuers = [
             "did:web:nzcp.identity.health.nz"
@@ -12,14 +17,16 @@
             detectWebcam((hasWebcam)=> {
                 if (!hasWebcam) {
                     alert('No valid camera found');
+                    return;
                 }
             });
 
-            let html5QrcodeScanner = new Html5QrcodeScanner(
-                "video-pane",
-                { fps: 10, qrbox: {width: 150, height: 150} },
-                /* verbose= */ false);
-              html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+                video.srcObject = stream;
+                video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                video.play();
+                requestAnimationFrame(tick);
+              });
         }
 
         function detectWebcam(callback) {
@@ -30,14 +37,20 @@
                 });
         }
         
-        function onScanSuccess(detectedText, detectedResult) {
-            console.log(detectedText);
-            console.log(detectedResult);
-            handleScan(detectedText);
-        }
 
-        function onScanFailure(error) {
-            console.log(error);
+        function tick() {
+            canvasElement.height = video.videoHeight;
+            canvasElement.width = video.videoWidth;
+            canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+            var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+            var code = jsQR(imageData.data, imageData.width, imageData.height, {
+            inversionAttempts: "dontInvert",
+            });
+
+            if (code) {
+                handleScan(code.data);
+            }
+            requestAnimationFrame(tick);
         }
 
         async function handleScan(result) {
