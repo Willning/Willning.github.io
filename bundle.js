@@ -30045,8 +30045,8 @@ module.exports = function whichTypedArray(value) {
         }
 
         window.addEventListener('load', (event) => {
-            //scan();
-            loadImage();
+            scan();
+            //loadImage();
         });
 
 }).call(this)}).call(this,require("buffer").Buffer)
