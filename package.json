@@ -10,11 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "bignumber.js": "^9.0.1",
-    "cbor": "^8.0.2",
+    "cbor-web": "^8.1.0",
     "cose-js": "^0.8.2",
     "hi-base32": "^0.5.1",
-    "node-inspect-extracted": "^1.0.8",
-    "qr-scanner": "^1.3.0"
+    "node-inspect-extracted": "^1.0.8"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",

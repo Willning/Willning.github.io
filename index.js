@@ -1,10 +1,7 @@
-        const QrScanner = require('qr-scanner');
-        QrScanner.WORKER_PATH = './qr-scanner-worker.min.js';
-
         var base32 = require('hi-base32');
         const cose = require('cose-js');
         const jwk = require('./keys.json');
-        const cbor = require('cbor');
+        const cbor = require('cbor-web');
 
         const trusted_issuers = [
             "did:web:nzcp.identity.health.nz"
@@ -18,20 +15,11 @@
                 }
             });
 
-            var videoElem = document.getElementById('video-pane');
-
-            const qrScanner = new QrScanner(videoElem, async(result) => await handleScan());
-            qrScanner.start();
-        }
-
-        function loadImage(){
-
-            let image = new Image();
-            image.src = 'nzcp.png';
-
-            QrScanner.scanImage(image)
-            .then(result => handleScan(result))
-            .catch(error => console.log(error || 'No QR code found.'));
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                "video-pane",
+                { fps: 10, qrbox: {width: 250, height: 250} },
+                /* verbose= */ false);
+              html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         }
 
         function detectWebcam(callback) {
@@ -39,8 +27,18 @@
                 if (!md || !md.enumerateDevices) return callback(false);
                 md.enumerateDevices().then(devices => {
                     callback(devices.some(device => 'videoinput' === device.kind));
-                })
-            }        
+                });
+        }
+        
+        function onScanSuccess(detectedText, detectedResult) {
+            console.log(detectedText);
+            console.log(detectedResult);
+            handleScan(detectedText);
+        }
+
+        function onScanFailure(error) {
+            console.log(error);
+        }
 
         async function handleScan(result) {
             console.log('Decoded qr code:', result);
@@ -91,6 +89,7 @@
 
                     //1 is iss (issuer)
                     //5 is nbf ()
+                    //3 is the details 
                     //4 is exp (expiry)
                     
                     if (!trusted_issuers.includes(tokenMap.get(1)) ) {
@@ -108,7 +107,12 @@
                         return { error: "Expired"};
                     }
 
-                    alert("VALID certificate");
+                    let person = tokenMap.get('vc').credentialSubject;
+                    if (person) {
+                        alert("VALID certificate for "+person.givenName+" "+person.familyName+" "+person.dob);
+                    }
+                    console.log(tokenMap);
+
                     return tokenMap;
                     
                 } catch (e) {
