@@ -17,7 +17,7 @@
 
             let html5QrcodeScanner = new Html5QrcodeScanner(
                 "video-pane",
-                { fps: 10, qrbox: {width: 250, height: 250} },
+                { fps: 10, qrbox: {width: 150, height: 150} },
                 /* verbose= */ false);
               html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         }
