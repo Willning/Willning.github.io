@@ -29933,6 +29933,8 @@ module.exports = function whichTypedArray(value) {
         let canvasElement = document.getElementById("canvas");
         let canvas = canvasElement.getContext("2d");
 
+        let can_scan = true;
+
         const trusted_issuers = [
             "did:web:nzcp.identity.health.nz"
           ];
@@ -29972,8 +29974,11 @@ module.exports = function whichTypedArray(value) {
                     inversionAttempts: "dontInvert",
                 });
 
-                if (code) {
+                if ( code && can_scan) {
+                    can_scan = false; 
+                    
                     handleScan(code.data);
+                    //@@TODO pause scan until alert cleared
                 }
             }            
             
@@ -30058,8 +30063,9 @@ module.exports = function whichTypedArray(value) {
                 } catch (e) {
                     alert("INVALID");
                     console.error(e);
+                } finally {
+                    can_scan = true;
                 }
-
             }
         }
 
