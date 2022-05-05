@@ -51,7 +51,7 @@
 
                 if ( code && can_scan) {
                     can_scan = false; 
-                    
+
                     handleScan(code.data);
                     //@@TODO pause scan until alert cleared
                 }
@@ -113,7 +113,7 @@
                     //4 is exp (expiry)
                     
                     if (!trusted_issuers.includes(tokenMap.get(1)) ) {
-                        alert("INVALID, invalid issuer ")
+                        alert("INVALID, invalid issuer")
                         return { error: "Invalid Issuer"};
                     }
 
@@ -139,6 +139,7 @@
                     alert("INVALID");
                     console.error(e);
                 } finally {
+                    //Prevent scanning if the alert is not closed yet.
                     can_scan = true;
                 }
             }
